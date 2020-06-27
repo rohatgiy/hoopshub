@@ -1,0 +1,11 @@
+  {
+    "name": "SportsHub",
+    "version": "1.0",
+    "description": "For all your sports needs!",
+    "background": {
+        "scripts": ["sports.js"],
+        "persistent":true
+    },
+    "manifest_version": 2
+    
+  }

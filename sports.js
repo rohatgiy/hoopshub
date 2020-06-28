@@ -1,7 +1,5 @@
-var score1 = 0;
-var score2 = 0;
-var team1 = "a";
-var team2 = "b";
+function fetchData()
+{
+    fetch("http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2019/league/00_full_schedule.json");
 
-console.log('the teams playing are ' + team1 + ' and ' + team2 + '.');
-console.log('score is ' + score1 + '-' + score2+ '.');
+}

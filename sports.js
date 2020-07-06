@@ -1,15 +1,30 @@
-const fetch = require("node-fetch");
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 function fetchData()
 {
-    fetch("http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2019/league/00_full_schedule.json").then(function(data) {
-        displayGame(data);
-    })
-    .catch(function(data)
+    var req = new XMLHttpRequest;
+    req.open("GET", "http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2019/league/00_full_schedule.json", true);
+
+    req.onload = function()
+    {
+        if (req.status != 200)
+        {
+            console.log("error");
+        }
+        else
+        {
+            data = JSON.parse(req.responseText)
+            //console.log(JSON.parse(JSON.stringify(req.responseText)));
+            displayGame(data);
+        }
+    };
+
+    req.onerror = function()
     {
 
-    });
+    };
 
+    req.send();
 }
 
 function displayGame(data)
@@ -17,11 +32,7 @@ function displayGame(data)
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
-    if (data.mscd.mon.g.gdte.equals('2020-07-30'))
-    {
-        console.log(data.mscd.mon.h.ta + ' vs. ' + data.mscd.mon.v.ta);
-    }
+    console.log(data.lscd[7].mscd.g[0].gdte);
 }
 
 fetchData();
-displayGame(data);

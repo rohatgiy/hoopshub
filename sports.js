@@ -30,9 +30,31 @@ function fetchData()
 function displayGame(data)
 {
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var year = today.getFullYear();
+    var month = today.getMonth();
+    month = 6;
+    var day = today.getDate();
+    var calendar = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    console.log(data.lscd[7].mscd.g[0].gdte);
+    var currentMonth = calendar[month];
+    var index = -1;
+
+    for (i = 0; i < data.lscd.length; i++)
+    {
+        if (data.lscd[i].mscd.mon === currentMonth)
+        {
+            index = i;
+        }
+    }
+
+    for (i = 0; i < data.lscd[index].mscd.g.length; i++)
+    {
+        console.log('Home: ' + data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') '
+        + '\nAway: ' + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
+        +'\nGame date: ' + data.lscd[index].mscd.g[i].gdte + ' @ ' + data.lscd[index].mscd.g[i].stt + '\n')
+    }
 }
+
+// remember: stream link is in summer plan google doc
 
 fetchData();

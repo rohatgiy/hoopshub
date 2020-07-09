@@ -1,7 +1,7 @@
   {
-    "name": "SportsHub",
+    "name": "HoopsHub",
     "version": "1.0",
-    "description": "For all your sports needs!",
+    "description": "For all your basketball needs!",
     "background": {
         "scripts": ["sports.js"],
         "persistent":true

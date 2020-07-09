@@ -7,7 +7,7 @@ function fetchData()
 
     req.onload = () =>
     {
-        if (req.status != 200)
+        if (req.status != 200 && req.readyState != 1)
         {
             console.log("error");
         }
@@ -33,7 +33,7 @@ function displayGame(data)
     var year = today.getFullYear();
     var month = today.getMonth();
     var day = today.getDate();
-    day = 15;
+    day = 16;
     var calendar = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     var currentMonth = calendar[month];
@@ -51,18 +51,19 @@ function displayGame(data)
     {
         if (Math.abs(parseInt(data.lscd[index].mscd.g[i].gdte.substring(8), 10) - day) <= 7)
         {
-            var li = document.createElement('li');
-            li.innerHTML = 'Home: ' + data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') '
-            + '\nAway: ' + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
-            +'\nGame date: ' + data.lscd[index].mscd.g[i].gdte + ' @ ' + data.lscd[index].mscd.g[i].stt + '\n';
+            var div = document.createElement('div');
+            div.innerHTML = 'Home: ' + data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') '
+            + '<br>Away: ' + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
+            +'<br>Game date: ' + data.lscd[index].mscd.g[i].gdte + ' @ ' + data.lscd[index].mscd.g[i].stt + '<br>';
+            
 
             if (i === 0)
             {
-                document.querySelector('#next').appendChild(li);
+                document.querySelector('#next').appendChild(div);
             }
             else
             {
-                document.querySelector('#games').appendChild(li);
+                document.querySelector('#games').appendChild(div);
             }
 
             // console.log('Home: ' + data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') '
@@ -71,11 +72,19 @@ function displayGame(data)
         }
         else
         {
+            if (i === 0)
+            {
+                document.querySelector('#next').append('No games this week. :(');
+                document.querySelector('#games').append(':(');
+            }
             break;
         }
     }
 }
 
+// chrome.runtime.onInstalled.addListener(function() {
+
+// });
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('body').onload = fetchData;

@@ -3,7 +3,7 @@ body {
     width: 325px
 }
 
-button, a {
+a, a:not([href]), a:hover{
     border: none;
     color: whitesmoke;
     padding: 10px;
@@ -18,28 +18,22 @@ button, a {
     margin-bottom: 10px;
 }
 
-button:focus
-{
-    outline: none;
-}
-
-#remind {
+.remind {
     background-color: green; 
 }
 
-#remind:hover {
+.remind:hover {
     background-color: rgb(0, 90, 0);
+    color: whitesmoke;
+    text-decoration: none;
 }
 
-#stream {
+.stream {
     background-color: royalblue;
 }
 
-#stream:hover{
+.stream:hover{
     background-color: rgb(51, 80, 167);
-}
-
-a:hover{
     color: whitesmoke;
     text-decoration: none;
 }

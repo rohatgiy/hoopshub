@@ -1,5 +1,9 @@
 //const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('body').onload = fetchData;
+});
+
 function fetchData()
 {
     var req = new XMLHttpRequest;
@@ -29,7 +33,7 @@ function fetchData()
 
 function displayGame(data)
 {
-    var today = new Date();
+    var today = new Date(2020, 6, 22, 13, 59, 50);
     var year = today.getUTCFullYear();
     var month = today.getUTCMonth();
     var day = today.getUTCDate();
@@ -45,12 +49,7 @@ function displayGame(data)
         minsString = mins + "";
     }
 
-    if (hours-(today.getTimezoneOffset()/60) < 0)
-    {
-        hours = 12 + hours-(today.getTimezoneOffset()/60);
-    }
-
-    document.querySelector('#update').innerHTML = 'Last updated: ' + year + '-0' + (month+1) + '-' + day + ' @ ' + (hours-(today.getTimezoneOffset()/60)) + ':' + minsString + ' Local Time';
+    document.querySelector('#update').innerHTML = 'Last updated: ' + year + '-0' + (month+1) + '-' + day + ' @ ' + (hours) + ':' + minsString + ' UTC';
 
     var calendar = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -75,18 +74,24 @@ function displayGame(data)
         parseInt(data.lscd[index].mscd.g[i].utctm.substring(0,2))-(today.getTimezoneOffset()/60),
         parseInt(data.lscd[index].mscd.g[i].utctm.substring(3)));
 
-        if (gameDate.getUTCDate()-today.getUTCDate() <= 7 && gameDate.getUTCDate()-today.getUTCDate() >= 0)
+        if (gameDate.getUTCDate()-today.getUTCDate() < 0)
+        {
+            continue;
+        }
+        else if (gameDate.getUTCDate()-today.getUTCDate() <= 7 && gameDate.getUTCDate()-today.getUTCDate() >= 0)
         {
             var div = document.createElement('div');
             div.innerHTML = data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') vs. ' 
             + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
             +'<br>' + data.lscd[index].mscd.g[i].gdtutc + ' @ ' + data.lscd[index].mscd.g[i].utctm + ' UTC<br>';
-            var remind = document.createElement('button');
-            remind.id = 'remind';
+            
+            var remind = document.createElement('a');
+            remind.className = 'remind';
+            remind.id = 'remind-'+i+'';
             remind.innerHTML = 'Remind me!';
 
             var stream = document.createElement('a');
-            stream.id = 'stream';
+            stream.className = 'stream';
             stream.innerHTML = 'Stream it!';
             stream.target = '_blank';
             stream.href = 'https://nba-streams.xyz/schedule/';
@@ -94,11 +99,13 @@ function displayGame(data)
             div.append(remind);
             div.append(stream);
 
-            
+            // document.getElementById('remind-'+i).addEventListener('click', () => {
+            //     remindGame(today, gameDate);
+            // });
 
             if (today-gameDate > 0)
             {
-                console.log(gameDate);
+                //console.log(gameDate);
             }
             else
             {
@@ -126,17 +133,41 @@ function displayGame(data)
             break;
         }
     }
+
+    for (var k = 0; k < (document.getElementById('next').childElementCount + document.getElementById('games').childElementCount); k++)
+    {
+        var date = new Date(parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(0,4)), 
+        parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(5,7))-1, 
+        parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(8)),
+        parseInt(data.lscd[index].mscd.g[k].utctm.substring(0,2))-(today.getTimezoneOffset()/60),
+        parseInt(data.lscd[index].mscd.g[k].utctm.substring(3)));
+
+        var element = document.querySelector('#remind-'+k+'');
+        if (element === null)
+        {
+            console.log(k);
+        }
+        element.addEventListener('click', remindGame(today, date));
+    }
 }
 
-function remindGame()
+function remindGame(today, date)
 {
-    // remind code
+    return function()
+    {
+        chrome.runtime.sendMessage({current: today, future: date});
+
+        // var reminderTime = date.getTime()-3600000;
+        // console.log(reminderTime);
+        // var todayTime = today.getTime();
+        // console.log(todayTime);
+        // var diff = reminderTime - todayTime;
+
+        // if (diff != 0)
+        // {
+        //     chrome.alarms.create('game', {when: Date.now() + diff});
+        //     console.log(diff);
+        // }
+    }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('body').onload = fetchData;
-});
-
-//fetchData();
-
-// remember: stream link is in summer plan google doc

@@ -30,10 +30,28 @@ function fetchData()
 function displayGame(data)
 {
     var today = new Date();
-    var year = today.getFullYear();
-    var month = today.getMonth();
-    var day = today.getDate();
-    day = 16;
+    var year = today.getUTCFullYear();
+    var month = today.getUTCMonth();
+    var day = today.getUTCDate();
+    var hours = today.getUTCHours();
+    var mins = today.getUTCMinutes();   
+
+    if (mins < 10)
+    {
+        var minsString = "0"+ mins;
+    }
+    else
+    {
+        minsString = mins + "";
+    }
+
+    if (hours-(today.getTimezoneOffset()/60) < 0)
+    {
+        hours = 12 + hours-(today.getTimezoneOffset()/60);
+    }
+
+    document.querySelector('#update').innerHTML = 'Last updated: ' + year + '-0' + (month+1) + '-' + day + ' @ ' + (hours-(today.getTimezoneOffset()/60)) + ':' + minsString + ' Local Time';
+
     var calendar = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     var currentMonth = calendar[month];
@@ -47,25 +65,53 @@ function displayGame(data)
         }
     }
 
+    var first = true; 
+
     for (i = 0; i < data.lscd[index].mscd.g.length; i++)
     {
-        if (Math.abs(parseInt(data.lscd[index].mscd.g[i].gdte.substring(8), 10) - day) <= 7)
+        var gameDate = new Date(parseInt(data.lscd[index].mscd.g[i].gdtutc.substring(0,4)), 
+        parseInt(data.lscd[index].mscd.g[i].gdtutc.substring(5,7))-1, 
+        parseInt(data.lscd[index].mscd.g[i].gdtutc.substring(8)),
+        parseInt(data.lscd[index].mscd.g[i].utctm.substring(0,2))-(today.getTimezoneOffset()/60),
+        parseInt(data.lscd[index].mscd.g[i].utctm.substring(3)));
+
+        if (gameDate.getUTCDate()-today.getUTCDate() <= 7 && gameDate.getUTCDate()-today.getUTCDate() >= 0)
         {
             var div = document.createElement('div');
-            div.innerHTML = 'Home: ' + data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') '
-            + '<br>Away: ' + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
-            +'<br>Game date: ' + data.lscd[index].mscd.g[i].gdte + ' @ ' + data.lscd[index].mscd.g[i].stt + '<br>';
+            div.innerHTML = data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') vs. ' 
+            + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
+            +'<br>' + data.lscd[index].mscd.g[i].gdtutc + ' @ ' + data.lscd[index].mscd.g[i].utctm + ' UTC<br>';
+            var remind = document.createElement('button');
+            remind.id = 'remind';
+            remind.innerHTML = 'Remind me!';
+
+            var stream = document.createElement('a');
+            stream.id = 'stream';
+            stream.innerHTML = 'Stream it!';
+            stream.target = '_blank';
+            stream.href = 'https://nba-streams.xyz/schedule/';
+            
+            div.append(remind);
+            div.append(stream);
+
             
 
-            if (i === 0)
+            if (today-gameDate > 0)
             {
-                document.querySelector('#next').appendChild(div);
+                console.log(gameDate);
             }
             else
             {
-                document.querySelector('#games').appendChild(div);
+                if (first === true)
+                {
+                    document.querySelector('#next').appendChild(div);
+                    first = false;
+                }
+                else
+                {
+                    document.querySelector('#games').appendChild(div);
+                }
             }
-
             // console.log('Home: ' + data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') '
             // + '\nAway: ' + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
             // +'\nGame date: ' + data.lscd[index].mscd.g[i].gdte + ' @ ' + data.lscd[index].mscd.g[i].stt + '\n');
@@ -82,9 +128,10 @@ function displayGame(data)
     }
 }
 
-// chrome.runtime.onInstalled.addListener(function() {
-
-// });
+function remindGame()
+{
+    // remind code
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('body').onload = fetchData;

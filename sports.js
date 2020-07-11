@@ -2,7 +2,13 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('body').onload = fetchData;
+    document.querySelector('#next-page').addEventListener('click', showNextPage);
 });
+
+function showNextPage()
+{
+    document.querySelector('body').innerHTML= './index.html';
+}
 
 function fetchData()
 {
@@ -170,4 +176,3 @@ function remindGame(today, date)
         // }
     }
 }
-

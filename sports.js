@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function showNextPage()
 {
-    document.querySelector('body').innerHTML= './index.html';
+    parent.document.querySelector('iframe').src= './upcoming.html';
 }
 
 function fetchData()
@@ -70,7 +70,7 @@ function displayGame(data)
         }
     }
 
-    var first = true; 
+    var first = true;
 
     for (i = 0; i < data.lscd[index].mscd.g.length; i++)
     {
@@ -105,22 +105,18 @@ function displayGame(data)
             div.append(remind);
             div.append(stream);
 
-            // document.getElementById('remind-'+i).addEventListener('click', () => {
-            //     remindGame(today, gameDate);
-            // });
-
             if (today-gameDate > 0)
             {
                 //console.log(gameDate);
             }
             else
             {
-                if (first === true)
+                if (location.pathname.split('/').slice(-1)[0] === 'next.html' && gameDate.getDate() === today.getDate())
                 {
                     document.querySelector('#next').appendChild(div);
                     first = false;
                 }
-                else
+                else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html' && gameDate.getDate() != today.getDate())
                 {
                     document.querySelector('#games').appendChild(div);
                 }
@@ -140,7 +136,16 @@ function displayGame(data)
         }
     }
 
-    for (var k = 0; k < (document.getElementById('next').childElementCount + document.getElementById('games').childElementCount); k++)
+    if (location.pathname.split('/').slice(-1)[0] === 'next.html')
+        {
+            var string = 'next';
+        }
+        else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
+        {
+            var string = 'games';
+        }
+
+    for (var k = 0; k < document.getElementById(string).childElementCount; k++)
     {
         var date = new Date(parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(0,4)), 
         parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(5,7))-1, 

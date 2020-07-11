@@ -18,13 +18,18 @@ a, a:not([href]), a:hover, a:not([href]):hover{
     margin-bottom: 10px;
 }
 
+#title-underline
+{
+    margin-bottom: 5px;
+}
+
 #update
 {
     padding-bottom: 0px;
     margin-bottom: 0px;
 }
 
-#next-page
+#next-page, #previous-page
 {
     background-color:gray;
     
@@ -50,11 +55,13 @@ a, a:not([href]), a:hover, a:not([href]):hover{
 }
 
 div > div > div {
+    font-size: 15px;
     border: 3px solid black;
     padding: 7px;
-    width: 300px;
-    margin: 10px;
+    width: 150px;
+    margin: 5px;
     display: inline-block;
+    vertical-align: top;
     text-align: center;
 }
 

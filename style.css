@@ -8,7 +8,7 @@ a, a:not([href]), a:hover, a:not([href]):hover{
     color: whitesmoke;
     padding: 10px;
     text-align: center;
-    font-size: 16px;
+    font-size: 13px;
     cursor: pointer;
     border-radius: 25px;
     display:inline-block;
@@ -35,6 +35,11 @@ a, a:not([href]), a:hover, a:not([href]):hover{
     
 }
 
+#next-page:hover, #previous-page:hover
+{
+    background-color: rgb(102, 102, 102);
+}
+
 .remind {
     background-color: green; 
 }
@@ -54,15 +59,24 @@ a, a:not([href]), a:hover, a:not([href]):hover{
     text-decoration: none;
 }
 
-div > div > div {
+#next > div > div, #games > div > div
+{
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+}
+
+#next > div, #games > div {
     font-size: 15px;
     border: 3px solid black;
     padding: 7px;
     width: 150px;
+    height: 270px;
     margin: 5px;
     display: inline-block;
     vertical-align: top;
     text-align: center;
+    position: relative;
 }
 
 form {

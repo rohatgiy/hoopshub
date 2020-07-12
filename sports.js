@@ -2,12 +2,23 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('body').onload = fetchData;
-    document.querySelector('#next-page').addEventListener('click', showNextPage);
+    
+    if (location.pathname.split('/').slice(-1)[0] === 'next.html')
+    {
+        document.querySelector('#next-page').addEventListener('click', showOtherPage('upcoming'));
+    }
+    else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
+    {
+        document.querySelector('#previous-page').addEventListener('click', showOtherPage('next'));
+    } 
 });
 
-function showNextPage()
+function showOtherPage(filename)
 {
-    parent.document.querySelector('iframe').src= './upcoming.html';
+    return () =>
+    {
+        parent.document.querySelector('iframe').src= './' + filename + '.html';
+    }
 }
 
 function fetchData()
@@ -87,9 +98,11 @@ function displayGame(data)
         else if (gameDate.getUTCDate()-today.getUTCDate() <= 7 && gameDate.getUTCDate()-today.getUTCDate() >= 0)
         {
             var div = document.createElement('div');
-            div.innerHTML = data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') vs. ' 
-            + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
+            div.innerHTML = '<b>'+ data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') vs. ' 
+            + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') </b>'
             +'<br>' + data.lscd[index].mscd.g[i].gdtutc + ' @ ' + data.lscd[index].mscd.g[i].utctm + ' UTC<br>';
+
+            var subDiv = document.createElement('div');
             
             var remind = document.createElement('a');
             remind.className = 'remind';
@@ -101,9 +114,29 @@ function displayGame(data)
             stream.innerHTML = 'Stream it!';
             stream.target = '_blank';
             stream.href = 'https://nba-streams.xyz/schedule/';
+
+            // Uncomment this code on the 22nd of July to check if it works
+
+            // if (data.lscd[index].mscd.g[i].h.tc === 'LA')
+            // {
+            //     var temp = 'Los Angeles';
+            // }
+            // else
+            // {
+            //     var temp = data.lscd[index].mscd.g[i].h.tc;
+            // }
+            // var streamLink = temp + ' ' + data.lscd[index].mscd.g[i].h.tn + ' live stream';
+            // streamLink = streamLink.split(' ').join('-').toLowerCase(); 
+            // stream.href = 'https://nba-streams.xyz/stream/' + streamLink;
+
+            subDiv.append(stream);
+            subDiv.append(remind);
             
-            div.append(remind);
-            div.append(stream);
+            if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
+            {
+                stream.style.visibility = 'hidden';
+            }
+            div.append(subDiv);
 
             if (today-gameDate > 0)
             {
@@ -136,16 +169,24 @@ function displayGame(data)
         }
     }
 
-    if (location.pathname.split('/').slice(-1)[0] === 'next.html')
+    if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
+    {
+        for(var j = 0; j < document.querySelector('#games').childElementCount; j++)
         {
-            var string = 'next';
+            document.querySelector('#games').childNodes[j].style.height= '220px';
         }
-        else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
-        {
-            var string = 'games';
-        }
+    }
 
-    for (var k = 0; k < document.getElementById(string).childElementCount; k++)
+    if (location.pathname.split('/').slice(-1)[0] === 'next.html')
+    {
+        var string = 'next';
+    }
+    else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
+    {
+        var string = 'games';
+    }
+
+    for (var k = parseInt(document.querySelector('#'+string).firstChild.childNodes[4].lastChild.id.substring(7)); k < document.getElementById(string).childElementCount; k++)
     {
         var date = new Date(parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(0,4)), 
         parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(5,7))-1, 
@@ -164,20 +205,10 @@ function displayGame(data)
 
 function remindGame(today, date)
 {
-    return function()
+    return () =>
     {
+        alert('You will now be reminded 1 hour before the game. NOTE: Shutting down your computer will remove all reminders.');
+        console.log('sent message');
         chrome.runtime.sendMessage({current: today, future: date});
-
-        // var reminderTime = date.getTime()-3600000;
-        // console.log(reminderTime);
-        // var todayTime = today.getTime();
-        // console.log(todayTime);
-        // var diff = reminderTime - todayTime;
-
-        // if (diff != 0)
-        // {
-        //     chrome.alarms.create('game', {when: Date.now() + diff});
-        //     console.log(diff);
-        // }
     }
 }

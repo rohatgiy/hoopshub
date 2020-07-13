@@ -26,6 +26,6 @@ function createAlarm(today, date)
 function fireAlarm()
 {
     chrome.notifications.create('HoopsHub Game Reminder', {type: 'basic', 
-    iconUrl: './ball.png', title: 'HoopsHub Game Reminder', 
+    iconUrl: './hoopshub.png', title: 'HoopsHub Game Reminder', 
     message: 'Game in 1 hour!', contextMessage: 'Enjoy the game!'});
 }

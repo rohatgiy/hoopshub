@@ -2,10 +2,17 @@
     "name": "HoopsHub",
     "version": "1.0",
     "description": "For all your basketball needs!",
+    "icons":
+    {
+      "16": "./hoopshub16.png",
+      "48": "./hoopshub48.png",
+      "128": "./hoopshub128.png"
+    },
     "browser_action":
     {
       "default_popup": "./index.html",
       "default_title": "HoopsHub"
+      
     },
     "manifest_version": 2,
     "permissions":

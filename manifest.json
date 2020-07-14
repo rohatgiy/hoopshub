@@ -4,9 +4,9 @@
     "description": "For all your basketball needs!",
     "icons":
     {
-      "16": "./hoopshub16.png",
-      "48": "./hoopshub48.png",
-      "128": "./hoopshub128.png"
+      "16": "./images/hoopshub16.png",
+      "48": "./images/hoopshub48.png",
+      "128": "./images/hoopshub128.png"
     },
     "browser_action":
     {

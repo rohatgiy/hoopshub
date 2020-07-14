@@ -15,7 +15,7 @@ function showOtherPage(filename)
 {
     return () =>
     {
-        parent.document.querySelector('iframe').src= './' + filename + '.html';
+        parent.document.querySelector('iframe').src= './templates/' + filename + '.html';
     }
 }
 
@@ -47,7 +47,7 @@ function fetchData()
 
 function displayGame(data)
 {
-    var today = new Date();
+    var today = new Date(2020, 6, 22, 14, 59, 50);
     var year = today.getUTCFullYear();
     var month = today.getUTCMonth();
     var day = today.getUTCDate();

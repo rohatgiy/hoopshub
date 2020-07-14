@@ -52,17 +52,20 @@ a, a:not([href]), a:hover, a:not([href]):hover{
 .remind
 {
     background-color: #C9082A; 
+    margin-top: 0px;
 }
 
 .remind:hover
 {
     background-color: #960722;
     text-decoration: none;
+    margin-top: 0px;
 }
 
 .stream
 {
     background-color: #C9082A;
+    margin-bottom: 0px;
 }
 
 .stream:hover
@@ -70,6 +73,7 @@ a, a:not([href]), a:hover, a:not([href]):hover{
     background-color: #960722;
     color: white;
     text-decoration: none;
+    margin-bottom: 0px;
 }
 
 #next > div > div, #games > div > div
@@ -85,7 +89,7 @@ a, a:not([href]), a:hover, a:not([href]):hover{
     border: 3px solid #17408B;
     padding: 7px;
     width: 150px;
-    height: 270px;
+    height: 280px;
     margin: 5px;
     display: inline-block;
     vertical-align: top;

@@ -47,7 +47,7 @@ function fetchData()
 
 function displayGame(data)
 {
-    var today = new Date(2020, 6, 22, 14, 59, 50);
+    var today = new Date();
     var year = today.getUTCFullYear();
     var month = today.getUTCMonth();
     var day = today.getUTCDate();
@@ -95,9 +95,9 @@ function displayGame(data)
         else if (gameDate.getUTCDate()-today.getUTCDate() <= 7 && gameDate.getUTCDate()-today.getUTCDate() >= 0)
         {
             var div = document.createElement('div');
-            div.innerHTML = '<b>'+ data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') vs. ' 
+            div.innerHTML = '<b>'+ data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') <br>vs. <br>' 
             + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') </b>'
-            +'<br>' + data.lscd[index].mscd.g[i].gdtutc + ' @ ' + data.lscd[index].mscd.g[i].utctm + ' UTC<br>';
+            +'<br>' + data.lscd[index].mscd.g[i].gdtutc + ' @ ' + data.lscd[index].mscd.g[i].utctm + ' UTC';
 
             var subDiv = document.createElement('div');
             
@@ -186,7 +186,7 @@ function displayGame(data)
         var string = 'games';
     }
 
-    for (var k = parseInt(document.querySelector('#'+string).firstChild.childNodes[4].lastChild.id.substring(7)); k < document.getElementById(string).childElementCount; k++)
+    for (var k = parseInt(document.querySelector('#'+string).firstChild.childNodes[3].lastChild.id.substring(7)); k < document.getElementById(string).childElementCount; k++)
     {
         var date = new Date(parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(0,4)), 
         parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(5,7))-1, 

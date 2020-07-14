@@ -1,5 +1,3 @@
-//const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('body').onload = fetchData;
     
@@ -34,8 +32,7 @@ function fetchData()
         }
         else
         {
-            data = JSON.parse(req.responseText)
-            //console.log(JSON.parse(JSON.stringify(req.responseText)));
+            data = JSON.parse(req.responseText);
             displayGame(data);
         }
     };
@@ -50,7 +47,7 @@ function fetchData()
 
 function displayGame(data)
 {
-    var today = new Date(2020, 6, 22, 13, 59, 50);
+    var today = new Date(2020, 6, 22, 14, 59, 50);
     var year = today.getUTCFullYear();
     var month = today.getUTCMonth();
     var day = today.getUTCDate();
@@ -140,7 +137,7 @@ function displayGame(data)
 
             if (today-gameDate > 0)
             {
-                //console.log(gameDate);
+
             }
             else
             {
@@ -154,16 +151,19 @@ function displayGame(data)
                     document.querySelector('#games').appendChild(div);
                 }
             }
-            // console.log('Home: ' + data.lscd[index].mscd.g[i].h.tc + ' ' +  data.lscd[index].mscd.g[i].h.tn + ' (' + data.lscd[index].mscd.g[i].h.ta +') '
-            // + '\nAway: ' + data.lscd[index].mscd.g[i].v.tc + ' ' +  data.lscd[index].mscd.g[i].v.tn + ' (' + data.lscd[index].mscd.g[i].v.ta +') '
-            // +'\nGame date: ' + data.lscd[index].mscd.g[i].gdte + ' @ ' + data.lscd[index].mscd.g[i].stt + '\n');
         }
         else
         {
             if (i === 0)
             {
-                document.querySelector('#next').append('No games this week. :(');
-                document.querySelector('#games').append(':(');
+                if (location.pathname.split('/').slice(-1)[0] === 'next.html')
+                {
+                    document.querySelector('#next').append('No games today.');
+                }
+                else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
+                {
+                    document.querySelector('#games').append('No upcoming games.');
+                }
             }
             break;
         }

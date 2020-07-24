@@ -47,7 +47,7 @@ function fetchData()
 
 function displayGame(data)
 {
-    var today = new Date(2020, 6, 22, 14, 59, 50);
+    var today = new Date();
     var year = today.getUTCFullYear();
     var month = today.getUTCMonth();
     var day = today.getUTCDate();
@@ -79,6 +79,7 @@ function displayGame(data)
     }
 
     var first = true;
+    var counter = 0;
 
     for (i = 0; i < data.lscd[index].mscd.g.length; i++)
     {
@@ -110,21 +111,8 @@ function displayGame(data)
             stream.className = 'stream';
             stream.innerHTML = 'Stream it!';
             stream.target = '_blank';
-            stream.href = 'https://nba-streams.xyz/schedule/';
-
-            // Uncomment this code on the 22nd of July to check if it works
-
-            // if (data.lscd[index].mscd.g[i].h.tc === 'LA')
-            // {
-            //     var temp = 'Los Angeles';
-            // }
-            // else
-            // {
-            //     var temp = data.lscd[index].mscd.g[i].h.tc;
-            // }
-            // var streamLink = temp + ' ' + data.lscd[index].mscd.g[i].h.tn + ' live stream';
-            // streamLink = streamLink.split(' ').join('-').toLowerCase(); 
-            // stream.href = 'https://nba-streams.xyz/stream/' + streamLink;
+            stream.href = 'https://nbastreams.xyz/live/' + counter;
+            counter++;
 
             subDiv.append(stream);
             subDiv.append(remind);

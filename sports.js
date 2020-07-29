@@ -140,21 +140,6 @@ function displayGame(data)
                 }
             }
         }
-        else
-        {
-            if (i === 0)
-            {
-                if (location.pathname.split('/').slice(-1)[0] === 'next.html')
-                {
-                    document.querySelector('#next').append('No games today.');
-                }
-                else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
-                {
-                    document.querySelector('#games').append('No upcoming games.');
-                }
-            }
-            break;
-        }
     }
 
     if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
@@ -172,6 +157,11 @@ function displayGame(data)
     else if (location.pathname.split('/').slice(-1)[0] === 'upcoming.html')
     {
         var string = 'games';
+    }
+
+    if (document.querySelector('#'+string).childElementCount == 0)
+    {
+        document.querySelector('#'+string).innerHTML = 'No games.'
     }
 
     for (var k = parseInt(document.querySelector('#'+string).firstChild.childNodes[3].lastChild.id.substring(7)); k < document.getElementById(string).childElementCount; k++)

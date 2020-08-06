@@ -56,14 +56,32 @@ function displayGame(data)
 
     if (mins < 10)
     {
-        var minsString = "0"+ mins;
+        var minsString = "0" + mins;
     }
     else
     {
         minsString = mins + "";
     }
 
-    document.querySelector('#update').innerHTML = 'Last updated: ' + year + '-0' + (month+1) + '-' + day + ' @ ' + (hours) + ':' + minsString + ' UTC';
+    if (month+1 < 10)
+    {
+        var monString = "0" + (month+1);
+    }
+    else
+    {
+        monString = (month+1) + "";
+    }
+
+    if (day < 10)
+    {
+        var dayString = "0" + day;
+    }
+    else
+    {
+        dayString = day + "";
+    }
+
+    document.querySelector('#update').innerHTML = 'Last updated: ' + year + '-' + monString + '-' + dayString + ' @ ' + (hours) + ':' + minsString + ' UTC';
 
     var calendar = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

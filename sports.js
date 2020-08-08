@@ -179,10 +179,12 @@ function displayGame(data)
 
     if (document.querySelector('#'+string).childElementCount == 0)
     {
-        document.querySelector('#'+string).innerHTML = 'No games.'
+        document.querySelector('#'+string).innerHTML = 'No games.';
     }
 
-    for (var k = parseInt(document.querySelector('#'+string).firstChild.childNodes[3].lastChild.id.substring(7)); k < document.getElementById(string).childElementCount; k++)
+    var j = parseInt(document.querySelector('#'+string).firstChild.childNodes[3].lastChild.id.substring(7));
+
+    for (var k = j; k < document.getElementById(string).childElementCount+j; k++)
     {
         var date = new Date(parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(0,4)), 
         parseInt(data.lscd[index].mscd.g[k].gdtutc.substring(5,7))-1, 

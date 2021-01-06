@@ -129,8 +129,7 @@ function displayGame(data)
             stream.className = 'stream';
             stream.innerHTML = 'Stream it!';
             stream.target = '_blank';
-            stream.href = 'https://nbastreams.xyz/live/' + counter;
-            counter++;
+            stream.href = 'https://nbastreams.to';
 
             subDiv.append(stream);
             subDiv.append(remind);

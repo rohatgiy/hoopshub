@@ -22,7 +22,7 @@ function showOtherPage(filename)
 function fetchData()
 {
     var req = new XMLHttpRequest;
-    req.open("GET", "http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2021/league/00_full_schedule.json", true);
+    req.open("GET", "http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2022/league/00_full_schedule.json", true);
 
     req.onload = () =>
     {

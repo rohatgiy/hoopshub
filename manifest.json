@@ -1,6 +1,6 @@
   {
     "name": "HoopsHub",
-    "version": "1.7",
+    "version": "2.0",
     "description": "For all your basketball needs!",
     "icons":
     {
@@ -8,13 +8,13 @@
       "48": "./images/hoopshub48.png",
       "128": "./images/hoopshub128.png"
     },
-    "browser_action":
+    "action":
     {
       "default_popup": "./index.html",
       "default_title": "HoopsHub"
       
     },
-    "manifest_version": 2,
+    "manifest_version": 3,
     "permissions":
     [
       "alarms", 
@@ -23,7 +23,6 @@
     ],
     "background": 
     {
-      "scripts": ["background.js"],
-      "persistent": true
+      "service_worker": "background.js"
     }
   }

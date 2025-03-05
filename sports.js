@@ -129,7 +129,7 @@ function displayGame(data)
             stream.className = 'stream';
             stream.innerHTML = 'Stream it!';
             stream.target = '_blank';
-            stream.href = 'https://nbastreams.to';
+            stream.href = 'https://reddit-nba.com/';
 
             subDiv.append(stream);
             subDiv.append(remind);

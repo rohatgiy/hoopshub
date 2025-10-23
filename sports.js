@@ -22,7 +22,7 @@ function showOtherPage(filename)
 function fetchData()
 {
     var req = new XMLHttpRequest;
-    req.open("GET", "http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2024/league/00_full_schedule.json", true);
+    req.open("GET", "http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2025/league/00_full_schedule.json", true);
 
     req.onload = () =>
     {
@@ -129,7 +129,7 @@ function displayGame(data)
             stream.className = 'stream';
             stream.innerHTML = 'Stream it!';
             stream.target = '_blank';
-            stream.href = 'https://reddit-nba.com/';
+            stream.href = 'https://allstream.cc/sports/basketball';
 
             subDiv.append(stream);
             subDiv.append(remind);
